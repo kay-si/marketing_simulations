@@ -1,0 +1,50 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Prefecture {
+  code Int    @id @map("prefecture_code") @db.SmallInt // 都道府県コード (1-47)
+  name String @map("prefecture_name") @db.VarChar(20) // 都道府県名
+
+  areas Area[]
+
+  @@map("prefectures")
+}
+
+model Area {
+  code           String     @id @map("area_code") @db.VarChar(6) // 団体コード(JIS地方公共団体コード)
+  prefectureCode Int        @map("prefecture_code") @db.SmallInt
+  name           String     @map("area_name") @db.VarChar(50) // 市区町村名
+  prefecture     Prefecture @relation(fields: [prefectureCode], references: [code])
+
+  demographicsDistributions DemographicsDistribution[]
+
+  @@map("areas")
+}
+
+model DemographicsDistribution {
+  id              BigInt   @id @default(autoincrement())
+  areaCode        String   @map("area_code") @db.VarChar(6)
+  incomeRange     Int      @map("income_range") @db.SmallInt // 0 = 200万円未満 / 20歳以下（収入なし）
+  householdType   Int      @map("household_type") @db.SmallInt
+  ageRange        Int      @map("age_range") @db.SmallInt // 0 = ~20(20歳以下)
+  gender          Int      @db.SmallInt
+  populationCount Int      @default(0) @map("population_count")
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+  area            Area     @relation(fields: [areaCode], references: [code])
+
+  @@unique([areaCode, incomeRange, householdType, ageRange, gender], map: "demographics_distributions_unique_idx")
+  @@map("demographics_distributions")
+}
+

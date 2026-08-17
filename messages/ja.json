@@ -1,0 +1,78 @@
+{
+  "App": {
+    "title": "人口構成分布シミュレーション",
+    "description": "都道府県・市区町村を選択すると、人口構成の分布を確認できます。"
+  },
+  "Selector": {
+    "prefectureLabel": "都道府県",
+    "prefecturePlaceholder": "都道府県を検索・選択してください",
+    "prefectureNoResults": "該当する都道府県がありません",
+    "areaLabel": "市区町村",
+    "areaPlaceholder": "市区町村を検索・選択してください",
+    "areaNoResults": "該当する市区町村がありません"
+  },
+  "Table": {
+    "title": "人口構成分布",
+    "empty": "都道府県と市区町村を選択すると、人口構成分布が表示されます。",
+    "totalLabel": "合計人口",
+    "columns": {
+      "ageRange": "年齢層",
+      "gender": "性別",
+      "householdType": "世帯タイプ",
+      "incomeRange": "収入区分",
+      "populationCount": "人口数"
+    }
+  },
+  "Chart": {
+    "incomeLabel": "年収",
+    "genderLabel": "性別",
+    "allOption": "すべて",
+    "viewChart": "チャート",
+    "viewTable": "表"
+  },
+  "Codes": {
+    "incomeRange": {
+      "0": "収入なし（20歳以下）",
+      "1": "200万円未満",
+      "2": "200～400万円",
+      "3": "400～600万円",
+      "4": "600～800万円",
+      "5": "800～1000万円",
+      "6": "1000万円以上"
+    },
+    "householdType": {
+      "0": "未婚子なし",
+      "1": "既婚子なし",
+      "2": "既婚子あり",
+      "3": "未婚子あり"
+    },
+    "ageRange": {
+      "0": "~20",
+      "1": "20 -",
+      "2": "30 -",
+      "3": "40 -",
+      "4": "50 -",
+      "5": "60 -",
+      "6": "70 -",
+      "7": "80 -"
+    },
+    "gender": {
+      "0": "男性",
+      "1": "女性"
+    }
+  },
+  "Question": {
+    "title": "この分布について質問する",
+    "placeholder": "例：30代女性で収入が600万円以上の世帯はどのくらいいますか？",
+    "submit": "質問を送信",
+    "loading": "回答をシミュレーション中...",
+    "sampleSizeLabel": "アンケート対象人数",
+    "areaRequired": "先に都道府県・市区町村を選択してください。",
+    "errorGeneric": "エラーが発生しました。時間をおいて再度お試しください。"
+  },
+  "Locale": {
+    "label": "言語",
+    "ja": "日本語",
+    "en": "English"
+  }
+}

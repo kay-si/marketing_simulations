@@ -1,0 +1,78 @@
+{
+  "App": {
+    "title": "Demographics Distribution Simulation",
+    "description": "Select a prefecture and area to view the demographic distribution."
+  },
+  "Selector": {
+    "prefectureLabel": "Prefecture",
+    "prefecturePlaceholder": "Search and select a prefecture",
+    "prefectureNoResults": "No matching prefectures found",
+    "areaLabel": "Area",
+    "areaPlaceholder": "Search and select an area",
+    "areaNoResults": "No matching areas found"
+  },
+  "Table": {
+    "title": "Demographics Distribution",
+    "empty": "Select a prefecture and area to view the demographics distribution.",
+    "totalLabel": "Total population",
+    "columns": {
+      "ageRange": "Age range",
+      "gender": "Gender",
+      "householdType": "Household type",
+      "incomeRange": "Income range",
+      "populationCount": "Population"
+    }
+  },
+  "Chart": {
+    "incomeLabel": "Income",
+    "genderLabel": "Gender",
+    "allOption": "All",
+    "viewChart": "Chart",
+    "viewTable": "Table"
+  },
+  "Codes": {
+    "incomeRange": {
+      "0": "No income (20 or younger)",
+      "1": "Under 2M JPY",
+      "2": "2M - 4M JPY",
+      "3": "4M - 6M JPY",
+      "4": "6M - 8M JPY",
+      "5": "8M - 10M JPY",
+      "6": "10M JPY or more"
+    },
+    "householdType": {
+      "0": "Unmarried, no children",
+      "1": "Married, no children",
+      "2": "Married, with children",
+      "3": "Unmarried, with children"
+    },
+    "ageRange": {
+      "0": "~20",
+      "1": "20 -",
+      "2": "30 -",
+      "3": "40 -",
+      "4": "50 -",
+      "5": "60 -",
+      "6": "70 -",
+      "7": "80 -"
+    },
+    "gender": {
+      "0": "Male",
+      "1": "Female"
+    }
+  },
+  "Question": {
+    "title": "Ask a question about this distribution",
+    "placeholder": "e.g. How many households are in their 30s, female, with income over 6M JPY?",
+    "submit": "Ask",
+    "loading": "Simulating responses...",
+    "sampleSizeLabel": "Survey sample size",
+    "areaRequired": "Select a prefecture and area first.",
+    "errorGeneric": "Something went wrong. Please try again."
+  },
+  "Locale": {
+    "label": "Language",
+    "ja": "日本語",
+    "en": "English"
+  }
+}

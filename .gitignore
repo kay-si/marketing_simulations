@@ -1,0 +1,12 @@
+node_modules
+# Keep environment variables out of version control
+.env
+.env.local
+
+/src/generated/prisma
+docker/*/volume
+files/*
+.next
+
+.DS_Store
+.yarn/install-state.gz

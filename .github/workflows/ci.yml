@@ -1,0 +1,78 @@
+name: CI Quality Checks
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+  pull_request:
+    branches:
+      - main
+      - develop
+
+# Yarn 4.x (Berry) は Corepack 経由で管理する
+# package.json に "packageManager": "yarn@4.12.0" の記載が必要
+
+jobs:
+  lint:
+    name: ESLint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Enable Corepack (Yarn 4.x)
+        run: corepack enable
+
+      - name: Install dependencies
+        run: yarn install --immutable
+
+      - name: Run ESLint
+        run: yarn eslint "src/**/*.{ts,tsx}"
+
+  typecheck:
+    name: TypeScript Type Check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Enable Corepack (Yarn 4.x)
+        run: corepack enable
+
+      - name: Install dependencies
+        run: yarn install --immutable
+
+      - name: Run TypeScript type check
+        run: yarn tsc --noEmit
+
+  audit:
+    name: Security Audit
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Enable Corepack (Yarn 4.x)
+        run: corepack enable
+
+      # yarn audit は脆弱性が見つかると exit code が非ゼロになるため、
+      # 必要に応じて --severity を指定して許容する深刻度を調整する
+      # 例: --severity high (high / critical のみ失敗とする)
+      - name: Run security audit
+        run: yarn npm audit --severity moderate
