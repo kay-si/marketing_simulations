@@ -10,3 +10,4 @@ files/*
 
 .DS_Store
 .yarn/install-state.gz
+tsconfig.tsbuildinfo
