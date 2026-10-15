@@ -3,7 +3,6 @@ node_modules
 .env
 .env.local
 
-/src/generated/prisma
 docker/*/volume
 files/*
 .next
