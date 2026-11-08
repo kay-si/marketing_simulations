@@ -9,7 +9,7 @@ const prisma = new PrismaClient({ adapter });
 const HEADER_ROWS = 4; // age, gender, household, income
 const LABEL_ROW_INDEX = 4; // 団体コード,都道府県コード,都道府県名,市区町村名
 const HEADER_COLS = 4;
-const SCALE = 10000; // 構成比(0〜1) を population_count(INT) に変換する係数
+const SCALE = 10000000000; // 構成比(0〜1) を population_count(INT) に変換する係数
 
 function parseCsv(text: string) {
   return text
@@ -19,7 +19,10 @@ function parseCsv(text: string) {
 }
 
 async function main() {
-  const csvPath = path.resolve(process.cwd(), "files/demographics_distributions.csv");
+  const csvPath = path.resolve(
+    process.cwd(),
+    "files/demographics_distributions.csv"
+  );
   const raw = readFileSync(csvPath, "utf-8").replace(/^﻿/, "");
   const rows = parseCsv(raw);
 
@@ -54,6 +57,10 @@ async function main() {
     const prefectureName = row[2];
     const areaName = row[3];
 
+    if (areaName === "双葉町") {
+      continue;
+    }
+
     prefectures.set(prefectureCode, prefectureName);
     areas.set(areaCode, { prefectureCode, name: areaName });
 
@@ -73,7 +80,7 @@ async function main() {
   }
 
   console.log(
-    `prefectures: ${prefectures.size}, areas: ${areas.size}, distribution rows: ${distributionRecords.length}`,
+    `prefectures: ${prefectures.size}, areas: ${areas.size}, distribution rows: ${distributionRecords.length}`
   );
 
   await prisma.prefecture.createMany({
@@ -93,8 +100,15 @@ async function main() {
   const BATCH_SIZE = 5000;
   for (let i = 0; i < distributionRecords.length; i += BATCH_SIZE) {
     const batch = distributionRecords.slice(i, i + BATCH_SIZE);
-    await prisma.demographicsDistribution.createMany({ data: batch, skipDuplicates: true });
-    console.log(`inserted ${Math.min(i + BATCH_SIZE, distributionRecords.length)}/${distributionRecords.length}`);
+    await prisma.demographicsDistribution.createMany({
+      data: batch,
+      skipDuplicates: true,
+    });
+    console.log(
+      `inserted ${Math.min(i + BATCH_SIZE, distributionRecords.length)}/${
+        distributionRecords.length
+      }`
+    );
   }
 
   console.log("done");

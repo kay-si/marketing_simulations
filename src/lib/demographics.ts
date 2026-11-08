@@ -6,23 +6,23 @@ export const AGE_RANGE_CODES = [0, 1, 2, 3, 4, 5, 6, 7] as const;
 export const GENDER_CODES = [0, 1] as const;
 
 export const incomeRangeSchema = z.union(
-  INCOME_RANGE_CODES.map((code) => z.literal(code)),
+  INCOME_RANGE_CODES.map((code) => z.literal(code))
 );
 export const householdTypeSchema = z.union(
-  HOUSEHOLD_TYPE_CODES.map((code) => z.literal(code)),
+  HOUSEHOLD_TYPE_CODES.map((code) => z.literal(code))
 );
-export const ageRangeSchema = z.union(AGE_RANGE_CODES.map((code) => z.literal(code)));
-export const genderSchema = z.union(GENDER_CODES.map((code) => z.literal(code)));
+export const ageRangeSchema = z.union(
+  AGE_RANGE_CODES.map((code) => z.literal(code))
+);
+export const genderSchema = z.union(
+  GENDER_CODES.map((code) => z.literal(code))
+);
 
 export const areaCodeSchema = z
   .string()
   .regex(/^\d{6}$/, "area_code must be a 6-digit code");
 
-export const prefectureCodeSchema = z.coerce
-  .number()
-  .int()
-  .min(1)
-  .max(47);
+export const prefectureCodeSchema = z.coerce.number().int().min(1).max(47);
 
 export const searchParamsSchema = z.object({
   prefectureCode: z.string().optional(),
@@ -41,13 +41,13 @@ export const CODE_LABELS = {
     6: "1000万円以上",
   },
   householdType: {
-    0: "未婚子なし",
-    1: "既婚子なし",
-    2: "既婚子あり",
-    3: "未婚子あり",
+    0: "単身世帯",
+    1: "夫婦子なし",
+    2: "夫婦子あり",
+    3: "ひとり親子あり",
   },
   ageRange: {
-    0: "20歳以下",
+    0: "20歳未満",
     1: "20代",
     2: "30代",
     3: "40代",

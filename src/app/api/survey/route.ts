@@ -2,21 +2,30 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { OpenAiError, createJsonChatCompletion } from "@/lib/openai";
 import { prisma } from "@/lib/prisma";
-import { DEFAULT_SAMPLE_SIZE, buildSurveyPrompt, computeComposition, surveyRequestSchema } from "@/lib/survey";
+import {
+  DEFAULT_SAMPLE_SIZE,
+  buildSurveySamplesPrompt,
+  buildSurveySummaryPrompt,
+  computeComposition,
+  surveyRequestSchema,
+} from "@/lib/survey";
 
 export async function POST(request: Request) {
   let json: unknown;
   try {
     json = await request.json();
   } catch {
-    return NextResponse.json({ error: "Request body must be valid JSON" }, { status: 400 });
+    return NextResponse.json(
+      { error: "Request body must be valid JSON" },
+      { status: 400 }
+    );
   }
 
   const parsed = surveyRequestSchema.safeParse(json);
   if (!parsed.success) {
     return NextResponse.json(
       { error: "Invalid request", issues: z.treeifyError(parsed.error) },
-      { status: 400 },
+      { status: 400 }
     );
   }
 
@@ -25,7 +34,10 @@ export async function POST(request: Request) {
 
   const area = await prisma.area.findUnique({ where: { code: areaCode } });
   if (!area) {
-    return NextResponse.json({ error: `Unknown areaCode: ${areaCode}` }, { status: 404 });
+    return NextResponse.json(
+      { error: `Unknown areaCode: ${areaCode}` },
+      { status: 404 }
+    );
   }
 
   const rows = await prisma.demographicsDistribution.findMany({
@@ -40,26 +52,37 @@ export async function POST(request: Request) {
   if (composition.totalPopulation === 0) {
     return NextResponse.json(
       { error: "No population data matches the given filters" },
-      { status: 404 },
+      { status: 404 }
     );
   }
 
-  const { system, user } = buildSurveyPrompt({
-    areaName: area.name,
-    composition,
-    question,
-    sampleSize: resolvedSampleSize,
-  });
-
   try {
-    const result = await createJsonChatCompletion({ system, user });
+    const surveySamples = await createJsonChatCompletion(
+      buildSurveySamplesPrompt({
+        areaName: area.name,
+        composition,
+        question,
+        sampleSize: resolvedSampleSize,
+      })
+    );
+
+    const surveySummary = await createJsonChatCompletion(
+      buildSurveySummaryPrompt({
+        areaName: area.name,
+        composition,
+        question,
+        sampleSize: resolvedSampleSize,
+      })
+    );
+
     return NextResponse.json({
       areaCode,
       areaName: area.name,
       sampleSize: resolvedSampleSize,
       question,
       composition,
-      result,
+      surveySummary,
+      surveySamples,
     });
   } catch (error) {
     if (error instanceof OpenAiError) {
