@@ -7,13 +7,14 @@
     "build": "prisma generate && next build",
     "start": "next start",
     "lint": "eslint",
-    "vercel-build": "prisma generate && prisma migrate deploy && next build"
+    "vercel-build": "prisma generate && prisma migrate deploy && next build",
+    "audit": "yarn npm audit --severity moderate"
   },
   "dependencies": {
     "@prisma/adapter-pg": "^7.9.1",
     "@prisma/client": "^7.9.1",
     "chart.js": "^4.5.1",
-    "next": "16.4.1",
+    "next": "^16.4.3",
     "next-intl": "^4.13.6",
     "openai": "^7.4.0",
     "pg": "^8.23.0",
@@ -21,7 +22,7 @@
     "react-chartjs-2": "^5.3.1",
     "react-dom": "19.2.8",
     "server-only": "^0.0.1",
-    "zod": "^4.4.3"
+    "zod": "^4.6.7"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
@@ -30,9 +31,9 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^10.12.0",
-    "eslint-config-next": "^16.4.0",
-    "prisma": "^7.9.1",
-    "tailwindcss": "^4",
+    "eslint-config-next": "^16.4.3",
+    "prisma": "7",
+    "tailwindcss": "^4.3.3",
     "tsx": "^4.23.12",
     "typescript": "^5"
   },
