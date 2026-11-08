@@ -7,7 +7,8 @@
     "build": "prisma generate && next build",
     "start": "next start",
     "lint": "eslint",
-    "vercel-build": "prisma generate && prisma migrate deploy && next build"
+    "vercel-build": "prisma generate && prisma migrate deploy && next build",
+    "audit": "yarn npm audit --severity moderate"
   },
   "dependencies": {
     "@prisma/adapter-pg": "^7.9.1",
@@ -21,7 +22,7 @@
     "react-chartjs-2": "^5.3.1",
     "react-dom": "19.2.8",
     "server-only": "^0.0.1",
-    "zod": "^4.4.3"
+    "zod": "^4.6.7"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
