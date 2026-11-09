@@ -9,7 +9,7 @@ const prisma = new PrismaClient({ adapter });
 const HEADER_ROWS = 4; // age, gender, household, income
 const LABEL_ROW_INDEX = 4; // 団体コード,都道府県コード,都道府県名,市区町村名
 const HEADER_COLS = 4;
-const SCALE = 10000000000; // 構成比(0〜1) を population_count(INT) に変換する係数
+// const SCALE = 10000000000; // 構成比(0〜1) を population_count(INT) に変換する係数
 
 function parseCsv(text: string) {
   return text
@@ -74,7 +74,7 @@ async function main() {
         householdType: combo.householdType,
         ageRange: combo.ageRange,
         gender: combo.gender,
-        populationCount: Math.round(Number(cellValue) * SCALE),
+        populationCount: Math.round(Number(cellValue)),
       });
     }
   }
